@@ -3,8 +3,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
-from .models import User
-from .serializers import UserSerializer, AddBalanceSerializer
+from transactions.models import User
+from transactions.serializers import UserSerializer, AddBalanceSerializer
 
 
 class CreateUserView(generics.CreateAPIView):
