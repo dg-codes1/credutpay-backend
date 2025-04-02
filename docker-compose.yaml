@@ -1,0 +1,11 @@
+services:
+  backend:
+    container_name: credutpay-backend
+    privileged: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        OPTIONS_STARTUP: --reload --log-level=DEBUG
+    ports:
+      - "8000:8000"
