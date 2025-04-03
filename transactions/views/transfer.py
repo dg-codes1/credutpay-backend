@@ -7,11 +7,13 @@ from rest_framework.permissions import IsAuthenticated
 from transactions.models.user import User
 from transactions.models.transfer import Transfer
 from transactions.serializers.transfer import TransferSerializer, ListTransferenciaSerializer
+from transactions.pagination.transfer import TransferPagination
 
 
 class TransferViewSet(viewsets.ModelViewSet):
     queryset = Transfer.objects.all()
     permission_classes = [IsAuthenticated]
+    pagination_class = TransferPagination
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -65,6 +67,11 @@ class TransferViewSet(viewsets.ModelViewSet):
             if from_date > to_date:
                 raise ValidationError({"detail": "from_date cannot be after to_date."})
             transfers = transfers.filter(date_time__date__range=[from_date, to_date])
+
+        page = self.paginate_queryset(transfers)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
 
         serializer = self.get_serializer(transfers, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
