@@ -17,6 +17,11 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        if self.action in ['retrieve', 'get_balance', 'add_balance']:
+            return User.objects.filter(pk=self.request.user.pk)
+        return super().get_queryset()
+
     @action(detail=True, methods=['get'])
     def get_balance(self, request, pk=None):
         user = self.get_object()
