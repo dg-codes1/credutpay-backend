@@ -1,2 +1,1 @@
-from .user import *
-from .transfer import *
+from .user import User as User
