@@ -18,7 +18,7 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        if self.action in ["retrieve", "get_balance", "add_balance"]:
+        if self.action in ["retrieve", "update", "destroy", "get_balance", "add_balance"]:
             return User.objects.filter(pk=self.request.user.pk)
         return super().get_queryset()
 
