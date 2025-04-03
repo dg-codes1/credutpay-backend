@@ -22,6 +22,12 @@ class UserViewSet(viewsets.ModelViewSet):
             return User.objects.filter(pk=self.request.user.pk)
         return super().get_queryset()
 
+    def list(self, request, *args, **kwargs):
+        """
+        Avoid users to be able to get other users
+        """
+        return Response({"detail": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
+
     @action(detail=True, methods=['get'])
     def get_balance(self, request, pk=None):
         user = self.get_object()
