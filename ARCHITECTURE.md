@@ -61,4 +61,10 @@ Representa uma transferência financeira entre dois usuários.
 
 ---
 
-Essa documentação pode ser expandida conforme novos modelos ou funcionalidades sejam adicionados ao sistema.
+## **Próximos passos**
+- Identificar possíveis colunas e adições nas funcionalidades do usuário na visão de produto
+- Implementar swagger para documentação
+- Middleware para invalidar refresh tokens para evitar ataques de força bruta
+- Uso de Validators
+
+---
