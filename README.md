@@ -43,6 +43,11 @@ docker run -d --name nome -e POSTGRES_USER=meu_usuario -e POSTGRES_PASSWORD=minh
 python manage.py migrate
 ```
 
+* Execute a seed para popular o banco de dados se necessário
+```
+python manage.py seed_users
+```
+
 * Execute o projeto
 ```
 python manage.py runserver
