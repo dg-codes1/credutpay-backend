@@ -1,6 +1,8 @@
 from rest_framework import viewsets, status
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+
 
 from transactions.models.user import User
 from transactions.models.transfer import Transfer
@@ -31,13 +33,13 @@ class TransferViewSet(viewsets.ModelViewSet):
 
         if payer == receiver:
             return Response(
-                {"error": "Transfers from the same user are not allowed"},
+                {"error": "Transaction error."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         if payer.wallet_balance < value:
             return Response(
-                {"error": "Insufficient balance."}, status=status.HTTP_400_BAD_REQUEST
+                {"error": "Transaction error."}, status=status.HTTP_400_BAD_REQUEST
             )
 
         payer.wallet_balance -= value
@@ -60,6 +62,8 @@ class TransferViewSet(viewsets.ModelViewSet):
         to_date = request.query_params.get("to_date")
 
         if from_date and to_date:
+            if from_date > to_date:
+                raise ValidationError({"detail": "from_date cannot be after to_date."})
             transfers = transfers.filter(date_time__date__range=[from_date, to_date])
 
         serializer = self.get_serializer(transfers, many=True)
