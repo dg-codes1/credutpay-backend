@@ -48,6 +48,10 @@ python manage.py migrate
 python manage.py seed_users
 ```
 
+* Os usuários mock criados para teste serão:
+- 1 username="seeduser1", password="password1"
+- 2 username="seeduser2", password="password2"
+
 * Execute o projeto
 ```
 python manage.py runserver
